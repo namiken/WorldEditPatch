@@ -1,0 +1,7 @@
+name: WorldEdit
+main: com.sk89q.worldedit_custom.bukkit.CustomWorldEditPlugin
+version: "6.1.5;4651611"
+softdepend: [Spout] #hack to fix trove errors
+
+# Permissions aren't here. Read http://wiki.sk89q.com/wiki/WEPIF/DinnerPerms
+# for how WorldEdit permissions actually work.
