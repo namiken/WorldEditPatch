@@ -1,64 +1,64 @@
-# WorldEdit ���������
+# WorldEdit パッチプロジェクト
 
-Sn������o������÷�OL��cY�_�n����Minecraft Bukkit�鰤�\Y�WorldEdit���������gY����nWorldEdit�鰤��5W��܌_��������Wf������÷�2bW~Y
+このプロジェクトは、サーバークラッシュの問題を修正するためのカスタムMinecraft Bukkit プラグインを作成します。元のWorldEditプラグインを拡張して、WorldEditプラグインによるサーバークラッシュを防ぐために設計されています。
 
-## �����Ȃ�
+## アーキテクチャ
 
-- **����鰤�**: `com.sk89q.worldedit.bukkit.WorldEditPlugin`��5
-- **���**: `com/sk89q/worldedit_custom/bukkit/CustomWorldEditPlugin.java`
-- **�������**: MavenhAnt�qWf����nWorldEdit JAR�U�W�����chqk��ñ��
-- **�X��**: Spigot 1.8.8hWorldEdit-Bukkit 6.1.5!�h�`/lib/`k�����X��hWfMn	
+- **ベースプラグイン**: `com.sk89q.worldedit.bukkit.WorldEditPlugin`を拡張
+- **メインクラス**: `com/sk89q/worldedit_custom/bukkit/CustomWorldEditPlugin.java`
+- **ビルドプロセス**: MavenとAntを使用して、元のWorldEdit JARを展開し、カスタム修正を加えて再パッケージ化
+- **依存関係**: Spigot 1.8.8とWorldEdit-Bukkit 6.1.5（両方とも`/lib/`にシステム依存関係として配置）
 
-## ���Ư��
+## 主な機能
 
-Sn������n;j�oWorldEditn��܌_��!�Y�ShgY`onTabComplete()`���gzn�Ȓ�YShk������nWorldEdit��܌����gzWfD_������÷�2bW~Y
+このプロジェクトの主な目的は、WorldEditのタブ補完を無効化することです。`onTabComplete()`メソッドで空のリストを返すことで、元のWorldEditタブ補完システムで発生していたサーバークラッシュを防ぎます。
 
-## �z����
+## ビルド方法
 
-### ���
+### コンパイル
 ```bash
 mvn clean compile
 mvn package
 ```
 
-### �������
-1. `lib/worldedit-bukkit-6.1.5.jar`���ǣ���kU�plugin.ymlա��dO	
-2. ����Java��ɒ��Ѥ�
-3. Yyf�`target/worldedit-bukkit-6.1.5.jar`k�ñ��
+### ビルドプロセス
+1. `lib/worldedit-bukkit-6.1.5.jar`を出力ディレクトリに展開（plugin.ymlファイルを除く）
+2. カスタムJavaコードをコンパイル
+3. すべてを`target/worldedit-bukkit-6.1.5.jar`にパッケージ化
 
-## �X��
+## 依存関係
 
-YyfnŁjJARա��o`/lib/`ǣ���kMnU�fD~Y
+すべての必要なJARファイルは`/lib/`ディレクトリに配置されています：
 - Spigot 1.8.8: `/lib/spigot-1.8.8.jar`
 - WorldEdit 6.1.5: `/lib/worldedit-bukkit-6.1.5.jar`
 
-## ա��� 
+## ファイル構造
 
 ```
-/src/main/java/          # ����Java������
-/src/main/resources/plugin.yml    # ������鹒+��鰤���է��
-/src/main/resources/defaults/config.yml    # �թ��WorldEdit-�
-/lib/                    # ŁjJAR�X��
-/target/                 # �����ǣ���
+/src/main/java/                           # カスタムJavaソースコード
+/src/main/resources/plugin.yml            # カスタムメインクラスを持つプラグインマニフェスト
+/src/main/resources/defaults/config.yml   # デフォルトWorldEdit設定
+/lib/                                     # 必要なJAR依存関係
+/target/                                  # ビルド出力ディレクトリ
 ```
 
-## ;j��s0
+## 主な実装詳細
 
-**��܌n������**: ��n�o`onTabComplete()`���gzn�Ȓ�YShk��WorldEditn��܌�!�Y�ShgYS�k������nWorldEdit��܌����gzWfD_������÷�2bW~Y
+**タブ補完のオーバーライド**: 主な目的は、`onTabComplete()`メソッドで空のリストを返すことでWorldEditのタブ補完を無効化することです。これにより、元のWorldEditタブ補完システムで発生していたサーバークラッシュを防ぎます。
 
-**�鰤�-�**: �����鰤�o����nWorldEdithX-�� �(W~YL`plugin.yml`g���ѹL	�U�fD~Y
+**プラグイン設定**: カスタムプラグインは元のWorldEditと同じ設定構造を使用しますが、`plugin.yml`でメインクラスパスが修正されています。
 
-## (��
+## 使用方法
 
-1. �����Ȓ���W~Y
+1. プロジェクトをビルドします：
    ```bash
    mvn clean package
    ```
 
-2. U�_`target/worldedit-bukkit-6.1.5.jar`�����n`plugins`թ��k���W~Y
+2. 生成された`target/worldedit-bukkit-6.1.5.jar`をサーバーの`plugins`フォルダにコピーします。
 
-3. ������w�Wf�鰤��~Y
+3. サーバーを再起動してプラグインを有効化します。
 
-## ��
+## 注意
 
-Sn���oy�n������÷�OL��zY�_�k\U�~W_����nWorldEditnh_�o�U�~YL��܌_�o!�U�fD~Y
+このプラグインは既存のサーバークラッシュ問題を解決するために設計されました。元のWorldEditの機能はそのまま利用できますが、タブ補完は無効化されています。
